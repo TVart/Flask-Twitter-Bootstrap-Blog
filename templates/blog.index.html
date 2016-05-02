@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initialscale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+<title>Welcome Blog</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.css') }}">
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/coderoute.css') }}">
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" datatoggle="collapse" data-target=".navbar-collapse">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="#">Flask Simple Blog Admin</a>
+</div>
+<div class="collapse navbar-collapse">
+<ul class="nav navbar-nav">
+<li class="active"><a href="{{ url_for('Create') }}">Add article</a></li>
+<li><a href="#series">Series</a></li>
+<li><a href="#themes">Contact</a></li>
+</ul>
+</div><!--/.nav-collapse -->
+</div>
+</div>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Titre</th>
+<th>Description</th>
+<th>Detail</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+<tbody id="articles">
+{% for article in articles %}
+<tr>
+<td>{{ article.title }}</td>
+<td>{{ article.description }}</td>
+<td><a href="{{ url_for('Show',id=article.id) }}">Detail</a></td>
+<td><a href="{{ url_for('Edit',id=article.id) }}">Edit</a></td>
+<td><a href="{{ url_for('Delete',id=article.id) }}">Delete</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<div id="page_navigation"> </div>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+<script>
+var show_per_page = 3;
+var current_page = 0;
+function set_display(first, last) {
+//select * from articles limit first, last
+$('#articles').children().css('display', 'none');
+$('#articles').children().slice(first, last).css('display','block');
+}
+function previous(){
+if($('.active').prev('.page_link').length)
+go_to_page(current_page - 1);
+}
+function next(){
+if($('.active').next('.page_link').length)
+go_to_page(current_page + 1);
+}
+function go_to_page(page_num){
+current_page = page_num;
+start_from = current_page * show_per_page;
+end_on = start_from + show_per_page;
+set_display(start_from, end_on);
+$('.active').removeClass('active');
+$('#id' + page_num).addClass('active');
+}
+$(document).ready(function() {
+var number_of_pages = Math.ceil($('#articles').children().size() / show_per_page);
+var nav = '<ul class="pagination"><li><a href="javascript:previous();"><<</a>';
+var i = -1;
+while(number_of_pages > ++i){
+nav += '<li class="page_link'
+if(!i) nav += ' active';
+nav += '" id="id' + i +'">';
+nav += '<a href="javascript:go_to_page(' + i +')">'+ (i + 1)+'</a>';
+}
+nav += '<li><a href="javascript:next();">>></a></ul>';
+$('#page_navigation').html(nav);
+set_display(0, show_per_page);
+});
+</script>   
+</body>
+</html>

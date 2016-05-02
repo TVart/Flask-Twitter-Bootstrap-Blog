@@ -1,0 +1,16 @@
+<html>
+<head><title>New Article</title></head>
+<body>
+<form action="{{ url_for('Create') }}" method="POST">
+<label for="titre">Titre</label><br/>
+<input type="text" name="titre"><br/>
+<label for="description">Description</label><br/>
+<textarea name="description" row="3" col="10"></textarea><br/>
+<label for="status">Published</label>
+<input type="radio" name="status" value="Yes" checked>
+<input type="radio" name="status" value="No" ><br/><br/>
+<input type="submit" value="Create">
+<a href="{{url_for('Index')}}"><input type="button" value="Cancel"></a>
+</form>
+</body>
+</html>

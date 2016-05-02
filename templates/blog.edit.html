@@ -1,0 +1,27 @@
+<html>
+<head><title>Edit Article</title></head>
+<body>
+{{article.status}}
+<form action="{{ url_for('Update') }}" method="POST">
+<label for="titre">Titre</label><br/>
+<input type="text" name="titre" value="{{ article.title }}"><br/>
+<label for="description">Description</label><br/>
+<textarea name="description" row="3" col="10">
+{{ article.description }}
+</textarea><br/>
+<input type="hidden" name="METHOD" value="PUT">
+<input type="hidden" name="id" value="{{article.id}}">
+<label for="status">Published</label>
+{% if article.status == "Yes" %}
+<input type="radio" name="status" value="Yes" checked>
+<input type="radio" name="status" value="No">
+{% else %}
+<input type="radio" name="status" value="Yes">
+<input type="radio" name="status" value="No" checked>
+{% endif %}
+<br/><br/>
+<input type="submit" value="Update">
+<a href="{{url_for('Index')}}"><input type="button" value="Cancel"></a>
+</form>
+</body>
+</html>
