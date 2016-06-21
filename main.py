@@ -1,6 +1,5 @@
 import os
-import jsonify
-from flask import Flask, request, redirect, url_for 
+from flask import Flask, request, redirect, url_for, jsonify
 app = Flask(__name__)
 
 from sqlalchemy import create_engine
