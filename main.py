@@ -27,7 +27,7 @@ def Index():
     return articles.index();
 
 @app.route('/api/article',methods=['GET'])
-def get_articles()
+def get_articles():
     return jsonify(articles.index())
 
 @app.route('/blog/create',methods=['GET','POST'])
