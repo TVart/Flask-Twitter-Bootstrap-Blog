@@ -1,4 +1,4 @@
-import os
+import os, jsonify
 from flask import Flask, request, redirect, url_for 
 app = Flask(__name__)
 
@@ -25,6 +25,10 @@ def Blog():
 @app.route('/blog/index')
 def Index():
     return articles.index();
+
+@app.route('/api/article',methods=['GET'])
+def get_articles()
+    return jsonify(articles.index())
 
 @app.route('/blog/create',methods=['GET','POST'])
 def Create():
